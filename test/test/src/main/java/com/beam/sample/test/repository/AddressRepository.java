@@ -10,6 +10,5 @@ public interface AddressRepository extends JpaRepository<Address, String> {
     Address findByStreet(String street);
 
 
-  //  @Query("SELECT a FROM Address a WHERE LOWER(a.street) = LOWER(:street)")
-   // Address retrieveByStreet(@Param("street") String street);
+
 }

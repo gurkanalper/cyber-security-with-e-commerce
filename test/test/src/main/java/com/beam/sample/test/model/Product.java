@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.UUID;
 
-@Entity
+//@Entity
 @Getter
 @Setter
 @Document(collection = "products")

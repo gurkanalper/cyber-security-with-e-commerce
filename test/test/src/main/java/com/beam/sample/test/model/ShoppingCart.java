@@ -1,28 +1,32 @@
 package com.beam.sample.test.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
-@Entity
+//@Entity
+//@Table(name = "ShoppingCart")
+@Document(collection = "shopping_cart")
 public class ShoppingCart {
 
     @Id
+   // @Column(name = "cart_id")
     private String id;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "cart_id")
     private List<Product> products = new ArrayList<>();
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
+
 
     private int amount;
 

@@ -1,12 +1,10 @@
 package com.beam.sample.test.model;
 
-
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.TypeAlias;
 
-import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -14,6 +12,7 @@ import java.util.UUID;
 @Getter
 @Setter
 //@Document(collection = "users")
+@Table(name = "Users")
 public class User {
 
     public enum Role {
@@ -23,20 +22,34 @@ public class User {
 
 
     @Id
+    @Column(name = "user_id")
     private String id;
-
+    @Column(name = "email", unique = true)
     private String email;
+    @Column(name = "password")
     private String password;
-
+    @Column(name = "full_name")
     private String fullName;
+    @Column(name = "phone")
     private int phone;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
     private Role role;
 
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Address> address;
+    //@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    //private List<Address> address;
+    @ManyToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
 
-    public User(String id, String email, String password, List<Address> address, String fullName, int phone, Role role) {
+    public User() {
+        // Default constructor required by JPA
+    }
+
+
+
+    public User(String id, String email, String password, Address address, String fullName, int phone, Role role) {
         this.id = UUID.randomUUID().toString();
         this.email = email;
         this.password = password;
